@@ -1,0 +1,39 @@
+[Unit]
+Description={{AGENT_NAME_DISPLAY}} — autonomous cognitive agent (Telegram bot)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{AGENT_USER}}
+Group={{AGENT_GROUP}}
+WorkingDirectory={{AGENT_DIR}}
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=5
+
+# Environment
+EnvironmentFile=-{{AGENT_DIR}}/.env
+Environment=NODE_ENV=production
+
+# Resource limits
+MemoryMax=1G
+
+# Watchdog — process must call sd_notify or the heartbeat must prove liveness
+WatchdogSec=120
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier={{LOG_PREFIX}}
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{AGENT_DIR}}/workspace
+ReadWritePaths=%h/{{CONFIG_DIR}}
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+[Unit]
+Description={{AGENT_NAME_DISPLAY}} workspace git sync
+Wants={{SERVICE_PREFIX}}.service
+After={{SERVICE_PREFIX}}.service
+
+[Service]
+Type=oneshot
+User={{AGENT_USER}}
+WorkingDirectory={{AGENT_DIR}}
+ExecStart={{AGENT_DIR}}/deploy/timothy-git-sync.sh
+Environment=AGENT_DIR={{AGENT_DIR}}
+
+# Give git operations time to complete
+TimeoutStartSec=120

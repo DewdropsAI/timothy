@@ -1,0 +1,10 @@
+[Unit]
+Description={{AGENT_NAME_DISPLAY}} memory watchdog timer — fires every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

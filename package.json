@@ -1,0 +1,42 @@
+{
+  "name": "timothy",
+  "version": "1.0.0",
+  "description": "Personal agent that lives in Telegram, powered by Claude Code",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "cli": "tsx src/cli.ts",
+    "test": "node --experimental-vm-modules node_modules/.bin/vitest run",
+    "test:e2e": "node --experimental-vm-modules node_modules/.bin/vitest run --config vitest.e2e.config.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dewdropsai/timothy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.0",
+    "grammy": "^1.40.0",
+    "ink": "^6.7.0",
+    "marked": "^15.0.12",
+    "marked-terminal": "^7.3.0",
+    "react": "^19.2.4"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.50",
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "ink-testing-library": "^4.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,11 @@
+[Unit]
+Description={{AGENT_NAME_DISPLAY}} workspace git sync timer (every 30min)
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+Persistent=true
+Unit={{SERVICE_PREFIX}}-git-sync.service
+
+[Install]
+WantedBy=timers.target

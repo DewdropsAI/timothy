@@ -1,0 +1,18 @@
+[Unit]
+Description={{AGENT_NAME_DISPLAY}} memory watchdog — checks RSS and heartbeat health
+After={{SERVICE_PREFIX}}.service
+
+[Service]
+Type=oneshot
+User={{AGENT_USER}}
+Group={{AGENT_GROUP}}
+ExecStart={{AGENT_DIR}}/deploy/timothy-memory-watchdog.sh
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier={{LOG_PREFIX}}-watchdog
+
+# Need access to the status file
+ProtectHome=read-only
+ReadWritePaths=%h/{{CONFIG_DIR}}
