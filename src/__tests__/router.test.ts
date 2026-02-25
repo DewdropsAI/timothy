@@ -5,14 +5,14 @@ describe('resolveRoute', () => {
   const savedEnv: Record<string, string | undefined> = {};
 
   const envKeys = [
-    'TITUS_CONVERSATION_MODEL',
-    'TITUS_REFLECTION_MODEL',
-    'TITUS_SUMMARIZATION_MODEL',
-    'TITUS_EXTRACTION_MODEL',
-    'TITUS_CONVERSATION_TIMEOUT_MS',
-    'TITUS_REFLECTION_TIMEOUT_MS',
-    'TITUS_SUMMARIZATION_TIMEOUT_MS',
-    'TITUS_EXTRACTION_TIMEOUT_MS',
+    'TIMOTHY_CONVERSATION_MODEL',
+    'TIMOTHY_REFLECTION_MODEL',
+    'TIMOTHY_SUMMARIZATION_MODEL',
+    'TIMOTHY_EXTRACTION_MODEL',
+    'TIMOTHY_CONVERSATION_TIMEOUT_MS',
+    'TIMOTHY_REFLECTION_TIMEOUT_MS',
+    'TIMOTHY_SUMMARIZATION_TIMEOUT_MS',
+    'TIMOTHY_EXTRACTION_TIMEOUT_MS',
   ];
 
   beforeEach(() => {
@@ -61,7 +61,7 @@ describe('resolveRoute', () => {
   });
 
   it('overrides model via env var', () => {
-    process.env.TITUS_CONVERSATION_MODEL = 'claude-opus-4-6';
+    process.env.TIMOTHY_CONVERSATION_MODEL = 'claude-opus-4-6';
     const route = resolveRoute('conversation');
     expect(route.model).toBe('claude-opus-4-6');
     // mode and timeout should stay at defaults
@@ -70,7 +70,7 @@ describe('resolveRoute', () => {
   });
 
   it('overrides timeout via env var', () => {
-    process.env.TITUS_REFLECTION_TIMEOUT_MS = '120000';
+    process.env.TIMOTHY_REFLECTION_TIMEOUT_MS = '120000';
     const route = resolveRoute('reflection');
     expect(route.timeoutMs).toBe(120_000);
     // model and mode should stay at defaults
@@ -79,39 +79,39 @@ describe('resolveRoute', () => {
   });
 
   it('overrides both model and timeout via env vars', () => {
-    process.env.TITUS_SUMMARIZATION_MODEL = 'claude-sonnet-4-6';
-    process.env.TITUS_SUMMARIZATION_TIMEOUT_MS = '45000';
+    process.env.TIMOTHY_SUMMARIZATION_MODEL = 'claude-sonnet-4-6';
+    process.env.TIMOTHY_SUMMARIZATION_TIMEOUT_MS = '45000';
     const route = resolveRoute('summarization');
     expect(route.model).toBe('claude-sonnet-4-6');
     expect(route.timeoutMs).toBe(45_000);
   });
 
   it('ignores invalid timeout (NaN)', () => {
-    process.env.TITUS_EXTRACTION_TIMEOUT_MS = 'not-a-number';
+    process.env.TIMOTHY_EXTRACTION_TIMEOUT_MS = 'not-a-number';
     const route = resolveRoute('extraction');
     expect(route.timeoutMs).toBe(30_000);
   });
 
   it('ignores non-positive timeout', () => {
-    process.env.TITUS_EXTRACTION_TIMEOUT_MS = '0';
+    process.env.TIMOTHY_EXTRACTION_TIMEOUT_MS = '0';
     const route = resolveRoute('extraction');
     expect(route.timeoutMs).toBe(30_000);
   });
 
   it('ignores negative timeout', () => {
-    process.env.TITUS_EXTRACTION_TIMEOUT_MS = '-5000';
+    process.env.TIMOTHY_EXTRACTION_TIMEOUT_MS = '-5000';
     const route = resolveRoute('extraction');
     expect(route.timeoutMs).toBe(30_000);
   });
 
   it('trims whitespace from model env var', () => {
-    process.env.TITUS_CONVERSATION_MODEL = '  claude-opus-4-6  ';
+    process.env.TIMOTHY_CONVERSATION_MODEL = '  claude-opus-4-6  ';
     const route = resolveRoute('conversation');
     expect(route.model).toBe('claude-opus-4-6');
   });
 
   it('ignores empty model env var', () => {
-    process.env.TITUS_CONVERSATION_MODEL = '   ';
+    process.env.TIMOTHY_CONVERSATION_MODEL = '   ';
     const route = resolveRoute('conversation');
     expect(route.model).toBe('claude-sonnet-4-6');
   });

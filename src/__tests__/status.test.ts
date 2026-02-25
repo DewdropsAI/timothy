@@ -3,7 +3,7 @@ import { readFileSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { homedir } from 'node:os';
 
-const STATUS_DIR = join(homedir(), '.titus');
+const STATUS_DIR = join(homedir(), '.timothy');
 const STATUS_FILE = join(STATUS_DIR, 'status.json');
 
 // Dynamic import to reset module state between tests
@@ -62,7 +62,7 @@ describe('status file', () => {
   it('writeStatus creates directory if missing', async () => {
     const { writeStatus } = await loadStatusModule();
     // This test just verifies writeStatus doesn't throw when directory exists
-    // (We can't safely remove ~/.titus in a test environment)
+    // (We can't safely remove ~/.timothy in a test environment)
     writeStatus({ status: 'running', pid: 1234, started_at: new Date().toISOString() });
 
     const content = readFileSync(STATUS_FILE, 'utf-8');

@@ -50,7 +50,7 @@ const tick = () => new Promise((resolve) => setTimeout(resolve, 30));
 describe('WritebackStreamParser', () => {
   it('parses a single directive in one chunk', () => {
     const parser = new WritebackStreamParser();
-    const input = '<!--titus-write\nfile: memory/facts/foo.md\naction: create\nSome content.\n-->';
+    const input = '<!--timothy-write\nfile: memory/facts/foo.md\naction: create\nSome content.\n-->';
     const result = parser.push(input);
 
     expect(result.events).toHaveLength(1);
@@ -62,7 +62,7 @@ describe('WritebackStreamParser', () => {
 
   it('suppresses directive text from returned text', () => {
     const parser = new WritebackStreamParser();
-    const input = 'Hello <!--titus-write\nfile: a.md\naction: create\ncontent\n--> world';
+    const input = 'Hello <!--timothy-write\nfile: a.md\naction: create\ncontent\n--> world';
     const result = parser.push(input);
 
     expect(result.text).toBe('Hello  world');
@@ -73,8 +73,8 @@ describe('WritebackStreamParser', () => {
   it('handles opening tag split across two chunks', () => {
     const parser = new WritebackStreamParser();
 
-    const r1 = parser.push('text <!--tit');
-    const r2 = parser.push('us-write\nfile: a.md\naction: create\ncontent\n-->');
+    const r1 = parser.push('text <!--tim');
+    const r2 = parser.push('othy-write\nfile: a.md\naction: create\ncontent\n-->');
 
     const combinedText = r1.text + r2.text;
     const allEvents = [...r1.events, ...r2.events];
@@ -87,7 +87,7 @@ describe('WritebackStreamParser', () => {
   it('handles closing tag split across chunks', () => {
     const parser = new WritebackStreamParser();
 
-    const r1 = parser.push('<!--titus-write\nfile: a.md\naction: create\ncontent\n-');
+    const r1 = parser.push('<!--timothy-write\nfile: a.md\naction: create\ncontent\n-');
     const r2 = parser.push('->');
 
     const allEvents = [...r1.events, ...r2.events];
@@ -101,9 +101,9 @@ describe('WritebackStreamParser', () => {
     const parser = new WritebackStreamParser();
     const input = [
       'Before ',
-      '<!--titus-write\nfile: a.md\naction: create\nContent A.\n-->',
+      '<!--timothy-write\nfile: a.md\naction: create\nContent A.\n-->',
       ' middle ',
-      '<!--titus-write\nfile: b.md\naction: append\nContent B.\n-->',
+      '<!--timothy-write\nfile: b.md\naction: append\nContent B.\n-->',
       ' after',
     ].join('');
 
@@ -118,7 +118,7 @@ describe('WritebackStreamParser', () => {
   it('discards malformed directive (no closing tag) via flush()', () => {
     const parser = new WritebackStreamParser();
 
-    const r1 = parser.push('text <!--titus-write\nfile: a.md\naction: create\ncontent');
+    const r1 = parser.push('text <!--timothy-write\nfile: a.md\naction: create\ncontent');
     const r2 = parser.flush();
 
     // The incomplete directive is discarded, no events
@@ -132,9 +132,9 @@ describe('WritebackStreamParser', () => {
     const parser = new WritebackStreamParser();
     const input = [
       'Before ',
-      '<!--titus-write\nfile: x.md\naction: create\nX\n-->',
+      '<!--timothy-write\nfile: x.md\naction: create\nX\n-->',
       ' middle ',
-      '<!--titus-write\nfile: y.md\naction: update\nY\n-->',
+      '<!--timothy-write\nfile: y.md\naction: update\nY\n-->',
       ' after',
     ].join('');
 
@@ -146,7 +146,7 @@ describe('WritebackStreamParser', () => {
   it('parses directive with frontmatter correctly', () => {
     const parser = new WritebackStreamParser();
     const input = [
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/chris.md',
       'action: create',
       '---',
@@ -233,7 +233,7 @@ describe('StreamingResponse with writeback integration', () => {
   it('strips directive text from display and calls onWriteback', async () => {
     const chunks: StreamChunk[] = [
       { type: 'text', text: 'Hello ' },
-      { type: 'text', text: '<!--titus-write\nfile: memory/facts/foo.md\naction: create\nSome fact.\n-->' },
+      { type: 'text', text: '<!--timothy-write\nfile: memory/facts/foo.md\naction: create\nSome fact.\n-->' },
       { type: 'text', text: ' world' },
       { type: 'done', text: '' },
     ];
@@ -276,8 +276,8 @@ describe('StreamingResponse with writeback integration', () => {
 
     // Verify directive text is not visible
     let frame = instance.lastFrame()!;
-    expect(frame).not.toContain('<!--titus-write');
-    expect(frame).not.toContain('titus-write');
+    expect(frame).not.toContain('<!--timothy-write');
+    expect(frame).not.toContain('timothy-write');
 
     // Verify onWriteback was called
     expect(onWriteback).toHaveBeenCalledTimes(1);
@@ -296,7 +296,7 @@ describe('StreamingResponse with writeback integration', () => {
     frame = instance.lastFrame()!;
     expect(frame).toContain('Hello');
     expect(frame).toContain('world');
-    expect(frame).not.toContain('<!--titus-write');
+    expect(frame).not.toContain('<!--timothy-write');
 
     expect(onComplete).toHaveBeenCalledWith('Hello  world');
   });
@@ -304,9 +304,9 @@ describe('StreamingResponse with writeback integration', () => {
   it('triggers separate callbacks for multiple writebacks', async () => {
     const input = [
       'Before ',
-      '<!--titus-write\nfile: a.md\naction: create\nA\n-->',
+      '<!--timothy-write\nfile: a.md\naction: create\nA\n-->',
       ' middle ',
-      '<!--titus-write\nfile: b.md\naction: append\nB\n-->',
+      '<!--timothy-write\nfile: b.md\naction: append\nB\n-->',
       ' after',
     ].join('');
 
@@ -341,8 +341,8 @@ describe('StreamingResponse with writeback integration', () => {
 
   it('handles directive split across chunks correctly', async () => {
     const chunks: StreamChunk[] = [
-      { type: 'text', text: 'Hello <!--tit' },
-      { type: 'text', text: 'us-write\nfile: split.md\naction: create\nSplit content.\n-' },
+      { type: 'text', text: 'Hello <!--tim' },
+      { type: 'text', text: 'othy-write\nfile: split.md\naction: create\nSplit content.\n-' },
       { type: 'text', text: '->' },
       { type: 'text', text: ' done' },
       { type: 'done', text: '' },
@@ -385,7 +385,7 @@ describe('StreamingResponse with writeback integration', () => {
     expect(onWriteback.mock.calls[0][0].directive.file).toBe('split.md');
 
     const frame = instance.lastFrame()!;
-    expect(frame).not.toContain('<!--titus-write');
+    expect(frame).not.toContain('<!--timothy-write');
     expect(frame).toContain('Hello');
     expect(frame).toContain('done');
 

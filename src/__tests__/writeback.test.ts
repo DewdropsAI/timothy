@@ -17,7 +17,7 @@ describe('extractWritebacks', () => {
   it('parses a single directive with file, action, and content', () => {
     const response = [
       'Here is my reply.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/foo.md',
       'action: create',
       'Some fact content.',
@@ -34,7 +34,7 @@ describe('extractWritebacks', () => {
 
   it('parses directive with frontmatter between --- delimiters', () => {
     const response = [
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/chris-direct.md',
       'action: create',
       '---',
@@ -56,7 +56,7 @@ describe('extractWritebacks', () => {
 
   it('parses directive without frontmatter', () => {
     const response = [
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/simple.md',
       'action: create',
       'Just plain content here.',
@@ -73,13 +73,13 @@ describe('extractWritebacks', () => {
   it('parses multiple directives from one response', () => {
     const response = [
       'Some intro text.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/a.md',
       'action: create',
       'Fact A.',
       '-->',
       'Middle text.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: journal.md',
       'action: append',
       'Journal entry.',
@@ -107,7 +107,7 @@ describe('extractWritebacks', () => {
 
   it('skips malformed directives missing file', () => {
     const response = [
-      '<!--titus-write',
+      '<!--timothy-write',
       'action: create',
       'Content without a file field.',
       '-->',
@@ -120,7 +120,7 @@ describe('extractWritebacks', () => {
 
   it('skips malformed directives missing action', () => {
     const response = [
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/foo.md',
       'Content without an action field.',
       '-->',
@@ -134,7 +134,7 @@ describe('extractWritebacks', () => {
   it('preserves response text around directives in cleanResponse', () => {
     const response = [
       'Before directive.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/foo.md',
       'action: create',
       'Some content.',
@@ -151,13 +151,13 @@ describe('extractWritebacks', () => {
   it('strips all directives from cleanResponse', () => {
     const response = [
       'Hello!',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: a.md',
       'action: create',
       'Content A.',
       '-->',
       'Middle.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: b.md',
       'action: append',
       'Content B.',
@@ -167,7 +167,7 @@ describe('extractWritebacks', () => {
 
     const { cleanResponse } = extractWritebacks(response);
 
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
     expect(cleanResponse).not.toContain('Content A.');
     expect(cleanResponse).not.toContain('Content B.');
     expect(cleanResponse).toContain('Hello!');
@@ -177,7 +177,7 @@ describe('extractWritebacks', () => {
 
   it('handles directive with extra whitespace and newlines', () => {
     const response = [
-      '<!--titus-write',
+      '<!--timothy-write',
       '  file:   memory/facts/spaced.md  ',
       '  action:   create  ',
       '',
@@ -275,7 +275,7 @@ describe('applyWritebacks', () => {
   let testDir: string;
 
   beforeEach(() => {
-    testDir = join(tmpdir(), 'titus-test-writeback-' + Date.now());
+    testDir = join(tmpdir(), 'timothy-test-writeback-' + Date.now());
     mkdirSync(testDir, { recursive: true });
   });
 
@@ -386,7 +386,7 @@ describe('integration', () => {
   let testDir: string;
 
   beforeEach(() => {
-    testDir = join(tmpdir(), 'titus-test-writeback-integ-' + Date.now());
+    testDir = join(tmpdir(), 'timothy-test-writeback-integ-' + Date.now());
     mkdirSync(testDir, { recursive: true });
   });
 
@@ -397,7 +397,7 @@ describe('integration', () => {
   it('full round-trip: extract directives, apply writes, verify files and clean response', async () => {
     const response = [
       'I will remember that for you.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/likes-hiking.md',
       'action: create',
       '---',
@@ -420,7 +420,7 @@ describe('integration', () => {
     expect(directives[0].content).toBe('Chris enjoys hiking on weekends.');
 
     // Step 2: Clean response has no directives
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
     expect(cleanResponse).not.toContain('-->');
     expect(cleanResponse).toContain('I will remember that for you.');
     expect(cleanResponse).toContain('Is there anything else you would like to discuss?');

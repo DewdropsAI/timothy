@@ -12,9 +12,9 @@ import {
 } from '../reflection.js';
 import { _setPreparationsDir } from '../preparations.js';
 
-const tmpWm = join(tmpdir(), 'titus-test-reflprep-wm');
-const tmpMem = join(tmpdir(), 'titus-test-reflprep-mem');
-const tmpPrep = join(tmpdir(), 'titus-test-reflprep-prep');
+const tmpWm = join(tmpdir(), 'timothy-test-reflprep-wm');
+const tmpMem = join(tmpdir(), 'timothy-test-reflprep-mem');
+const tmpPrep = join(tmpdir(), 'timothy-test-reflprep-prep');
 
 function makeGatherResult(overrides: Partial<GatherResult> = {}): GatherResult {
   return {
@@ -67,7 +67,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'I should prepare context for the deployment discussion.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: deployment-strategy',
       'keywords: [deploy, kubernetes, rollback]',
       '---',
@@ -88,14 +88,14 @@ describe('preparation directive parsing', () => {
     const response = [
       'Preparing for a few things.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: ci-pipeline',
       'keywords: [ci, github-actions, tests]',
       '---',
       'The CI pipeline has been flaky on the integration tests.',
       '-->',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: router-refactor',
       'keywords: [router, adapter, refactoring]',
       '---',
@@ -117,7 +117,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'Preparing deployment context.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: deployment-review',
       'keywords: [deploy, review]',
       '---',
@@ -145,7 +145,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'I noticed something in the attention queue.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: test-topic',
       'keywords: [test]',
       '---',
@@ -159,7 +159,7 @@ describe('preparation directive parsing', () => {
 
     const result = await reflect(makeGatherResult({ hasAttentionItems: true }));
 
-    expect(result.response).not.toContain('<!--titus-prepare');
+    expect(result.response).not.toContain('<!--timothy-prepare');
     expect(result.response).not.toContain('Some prepared content here.');
     expect(result.response).toContain('I noticed something in the attention queue.');
     expect(result.response).toContain('Nothing else requires attention.');
@@ -186,7 +186,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'Thinking about stuff.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'keywords: [something]',
       '---',
       'Content without a topic.',
@@ -204,7 +204,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'Thinking.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: empty-content',
       'keywords: [test]',
       '---',
@@ -222,7 +222,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'Preparing.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: no-bracket-keywords',
       'keywords: alpha, beta, gamma',
       '---',
@@ -250,7 +250,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'Preparing.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: will-fail',
       'keywords: [test]',
       '---',
@@ -284,11 +284,11 @@ describe('preparation directive parsing', () => {
     const response = [
       'Reflection complete.',
       '',
-      '<!--titus-proactive',
+      '<!--timothy-proactive',
       'Hey Chris, the CI pipeline needs attention.',
       '-->',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: ci-fix-options',
       'keywords: [ci, fix, pipeline]',
       '---',
@@ -305,8 +305,8 @@ describe('preparation directive parsing', () => {
 
     expect(result.proactiveMessage).toBe('Hey Chris, the CI pipeline needs attention.');
     expect(result.preparations).toEqual(['ci-fix-options']);
-    expect(result.response).not.toContain('<!--titus-proactive');
-    expect(result.response).not.toContain('<!--titus-prepare');
+    expect(result.response).not.toContain('<!--timothy-proactive');
+    expect(result.response).not.toContain('<!--timothy-prepare');
     expect(result.response).toContain('Reflection complete.');
   });
 
@@ -314,7 +314,7 @@ describe('preparation directive parsing', () => {
     const response = [
       'Preparing.',
       '',
-      '<!--titus-prepare',
+      '<!--timothy-prepare',
       'topic: expiry-test',
       'keywords: [test]',
       '---',

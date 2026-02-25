@@ -18,7 +18,7 @@ import {
   type Thread,
 } from '../threads.js';
 
-const tmpDir = join(tmpdir(), 'titus-test-threads');
+const tmpDir = join(tmpdir(), 'timothy-test-threads');
 
 beforeEach(() => {
   _setMemoryDir(tmpDir);
@@ -45,7 +45,7 @@ describe('loadThreads', () => {
           topic: 'test topic',
           status: 'active',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 4,
         },
       ],
@@ -83,7 +83,7 @@ describe('saveThreads', () => {
           topic: 'saving test',
           status: 'active',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
       ],
@@ -211,7 +211,7 @@ describe('updateThreads', () => {
     expect(state.threads[0].topic).toContain('set up the development environment');
     expect(state.threads[0].status).toBe('active');
     expect(state.threads[0].messageCount).toBe(2);
-    expect(state.threads[0].participants).toEqual(['user', 'titus']);
+    expect(state.threads[0].participants).toEqual(['user', 'timothy']);
   });
 
   it('updates an existing thread with a similar topic', () => {
@@ -294,7 +294,7 @@ describe('updateThreads', () => {
         topic: `unique topic number ${i} for testing`,
         status: i < 25 ? 'resolved' : 'active',
         lastActivity: new Date(Date.now() - (50 - i) * 60000).toISOString(),
-        participants: ['user', 'titus'],
+        participants: ['user', 'timothy'],
         messageCount: 2,
       });
     }
@@ -319,7 +319,7 @@ describe('getActiveThreads', () => {
           topic: 'active topic',
           status: 'active',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
         {
@@ -327,7 +327,7 @@ describe('getActiveThreads', () => {
           topic: 'resolved topic',
           status: 'resolved',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 4,
         },
         {
@@ -335,7 +335,7 @@ describe('getActiveThreads', () => {
           topic: 'parked topic',
           status: 'parked',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
       ],
@@ -358,7 +358,7 @@ describe('parkThread', () => {
           topic: 'some topic',
           status: 'active',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
       ],
@@ -386,7 +386,7 @@ describe('resolveThread', () => {
           topic: 'some topic',
           status: 'active',
           lastActivity: '2026-01-01T00:00:00.000Z',
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 4,
         },
       ],

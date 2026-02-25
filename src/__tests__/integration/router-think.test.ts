@@ -117,11 +117,11 @@ describe('integration: think() orchestrator with MockAdapter', () => {
 
   describe('route resolution and adapter invocation', () => {
     it('resolves route and calls adapter for conversation type', async () => {
-      adapter.setDefaultResponse('Hello from Titus');
+      adapter.setDefaultResponse('Hello from Timothy');
 
       const result = await simulateThink(registry, 'Hi there', ws);
 
-      expect(result.text).toBe('Hello from Titus');
+      expect(result.text).toBe('Hello from Timothy');
       expect(result.modelUsed).toBe('claude-sonnet-4-6');
       expect(result.elapsedMs).toBeGreaterThanOrEqual(0);
 
@@ -175,14 +175,14 @@ describe('integration: think() orchestrator with MockAdapter', () => {
     it('includes identity from workspace in system prompt', async () => {
       writeFileSync(
         join(ws.path, 'identity', 'self.md'),
-        '# Titus\n\nI am Titus. I value directness.\n',
+        '# Timothy\n\nI am Timothy. I value directness.\n',
       );
 
       adapter.setDefaultResponse('ok');
       await simulateThink(registry, 'Who are you?', ws);
 
       const invocation = adapter.getLastInvocation()!;
-      expect(invocation.systemPrompt).toContain('Titus');
+      expect(invocation.systemPrompt).toContain('Timothy');
       expect(invocation.systemPrompt).toContain('directness');
     });
 
@@ -213,7 +213,7 @@ describe('integration: think() orchestrator with MockAdapter', () => {
     it('applies create writeback directives to workspace', async () => {
       const responseWithWriteback = [
         'I will remember that.',
-        '<!--titus-write',
+        '<!--timothy-write',
         'file: memory/facts/router-test.md',
         'action: create',
         'Router test fact content.',
@@ -231,7 +231,7 @@ describe('integration: think() orchestrator with MockAdapter', () => {
       expect(content).toContain('Router test fact content.');
 
       // cleanText should not contain the directive
-      expect(result.cleanText).not.toContain('<!--titus-write');
+      expect(result.cleanText).not.toContain('<!--timothy-write');
       expect(result.cleanText).toContain('I will remember that.');
       expect(result.cleanText).toContain('Done!');
     });
@@ -242,7 +242,7 @@ describe('integration: think() orchestrator with MockAdapter', () => {
 
       const responseWithAppend = [
         'Added to journal.',
-        '<!--titus-write',
+        '<!--timothy-write',
         'file: journal.md',
         'action: append',
         'Entry 2: New insight.',
@@ -260,12 +260,12 @@ describe('integration: think() orchestrator with MockAdapter', () => {
     it('applies multiple writeback directives in one response', async () => {
       const responseWithMultiple = [
         'Noted both facts.',
-        '<!--titus-write',
+        '<!--timothy-write',
         'file: memory/facts/fact-a.md',
         'action: create',
         'Fact A content.',
         '-->',
-        '<!--titus-write',
+        '<!--timothy-write',
         'file: memory/facts/fact-b.md',
         'action: create',
         'Fact B content.',
@@ -282,7 +282,7 @@ describe('integration: think() orchestrator with MockAdapter', () => {
     it('rejects writeback directives with path traversal', async () => {
       const responseWithTraversal = [
         'Attempting escape.',
-        '<!--titus-write',
+        '<!--timothy-write',
         'file: ../../../etc/evil.md',
         'action: create',
         'Evil content.',
@@ -293,7 +293,7 @@ describe('integration: think() orchestrator with MockAdapter', () => {
       const result = await simulateThink(registry, 'Escape attempt', ws);
 
       // The file should not have been created anywhere outside workspace
-      expect(result.cleanText).not.toContain('<!--titus-write');
+      expect(result.cleanText).not.toContain('<!--timothy-write');
     });
   });
 
@@ -318,7 +318,7 @@ describe('integration: think() orchestrator with MockAdapter', () => {
     it('memoryWrites contains parsed directives', async () => {
       const responseWithDirective = [
         'Noted.',
-        '<!--titus-write',
+        '<!--timothy-write',
         'file: memory/facts/parsed.md',
         'action: create',
         'Parsed content.',

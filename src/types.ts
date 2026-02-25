@@ -20,7 +20,7 @@ export interface Message {
 // ── Cognitive mode ──────────────────────────────────────────────────
 
 /**
- * Cognitive mode determines how Titus interacts with the underlying model
+ * Cognitive mode determines how the agent interacts with the underlying model
  * and what capabilities are communicated via the system prompt.
  *
  * - 'yolo': Full autonomous mode — tools, file access, bash, everything.
@@ -32,7 +32,7 @@ export type CognitiveMode = 'yolo' | 'print' | 'api';
 // ── Routing ─────────────────────────────────────────────────────────
 
 /**
- * Invocation types represent distinct cognitive tasks Titus performs.
+ * Invocation types represent distinct cognitive tasks the agent performs.
  * Each type maps to a specific model, CLI mode, and timeout.
  */
 export type InvocationType = 'conversation' | 'reflection' | 'summarization' | 'extraction';

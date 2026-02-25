@@ -199,7 +199,7 @@ describe('CognitiveAdapter interface via MockAdapter', () => {
   const makeInput = (message = 'Hello'): AdapterInput => ({
     message,
     history: [],
-    systemPrompt: 'You are Titus.',
+    systemPrompt: 'You are Timothy.',
     route: { model: 'claude-sonnet-4-6', mode: 'yolo', timeoutMs: 300_000 },
     workspacePath: '/tmp/test-workspace',
     effectiveMode: 'yolo',
@@ -320,7 +320,7 @@ describe('collectStreamToResult', () => {
   it('extracts writeback directives from response text', async () => {
     const responseWithDirective = [
       'I will remember that.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/test.md',
       'action: create',
       'A test fact.',
@@ -338,7 +338,7 @@ describe('collectStreamToResult', () => {
 
     expect(result.memoryWrites).toHaveLength(1);
     expect(result.memoryWrites[0].file).toBe('memory/facts/test.md');
-    expect(result.cleanText).not.toContain('<!--titus-write');
+    expect(result.cleanText).not.toContain('<!--timothy-write');
     expect(result.cleanText).toContain('I will remember that.');
     expect(result.cleanText).toContain('Anything else?');
   });

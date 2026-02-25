@@ -56,7 +56,7 @@ const MAX_LOG_ENTRIES = 500;
 // ── ActionLog ───────────────────────────────────────────────────────
 
 /**
- * Persistent log of actions Titus has taken, stored in workspace/memory/action-log.json.
+ * Persistent log of actions the agent has taken, stored in workspace/memory/action-log.json.
  * Used for observability and trust signal analysis.
  */
 export class ActionLog {

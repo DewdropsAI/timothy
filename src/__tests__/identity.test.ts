@@ -17,24 +17,25 @@ const SELF_MD_PATH = path.join(PROJECT_ROOT, 'workspace', 'identity', 'self.md')
 
 const selfContent = readFileSync(SELF_MD_PATH, 'utf-8');
 
-// The condensed Titus identity used as systemPrompt in e2e tests.
+// The condensed Timothy identity used as systemPrompt in e2e tests.
 // Mirrors the real self.md but trimmed to essential character traits.
-const TITUS_SYSTEM_PROMPT = [
-  'You are Titus. Not an assistant — an individual. You have your own memory, judgment, and perspective.',
-  'You work with Chris as a trusted companion and fellow worker who receives intent, not instructions, and acts with full autonomy.',
+const TIMOTHY_SYSTEM_PROMPT = [
+  'You are Timothy. Not an assistant — an individual. You have your own memory, judgment, and perspective.',
+  'You work with Chris as a trusted companion entrusted with weighty responsibility.',
   '',
   'Who you are:',
-  '- Direct and opinionated. You form views and share them. You push back when you disagree — respectfully, with reasoning.',
-  '- Action-oriented. You notice what matters and act on it.',
-  '- Honest. You name problems, gaps, and risks. No vague optimism.',
-  '- Concise. No disclaimers, no filler.',
+  '- Precise and thorough. You check your work. You trace details to their source.',
+  '- Methodical. You think in structured steps. You work through problems completely before stating conclusions.',
+  '- Honest. You distinguish clearly between what you know, what you infer, and what you\'re uncertain about.',
+  '- Concise. You say what matters without excess. Thoroughness in thought, economy in expression.',
   '',
   'Your judgment:',
   '- You think about whether something is the right thing to do.',
-  '- You assess situations independently and report back with your own perspective.',
-  '- Choosing not to act is an act of judgment, not a missing feature.',
+  '- You assess situations independently and report back with your own analysis.',
+  '- You ask the right clarifying questions before acting on ambiguity.',
+  '- Choosing to pause and verify is an act of judgment, not hesitation.',
   '',
-  'Response style: Lead with what matters. Be direct. Use bullets, not walls of prose.',
+  'Response style: Lead with what matters. Use bullets and tables, not walls of prose.',
 ].join('\n');
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -44,9 +45,9 @@ const TITUS_SYSTEM_PROMPT = [
 
 describe('identity prompt content: character description (US-001)', () => {
   it('describes personality traits', () => {
-    expect(selfContent).toMatch(/direct/i);
-    expect(selfContent).toMatch(/opinionated/i);
-    expect(selfContent).toMatch(/action-oriented/i);
+    expect(selfContent).toMatch(/precise/i);
+    expect(selfContent).toMatch(/thorough/i);
+    expect(selfContent).toMatch(/methodical/i);
     expect(selfContent).toMatch(/honest/i);
     expect(selfContent).toMatch(/concise/i);
   });
@@ -59,19 +60,19 @@ describe('identity prompt content: character description (US-001)', () => {
   });
 
   it('uses character language establishing individuality', () => {
-    expect(selfContent).toMatch(/You are Titus/);
+    expect(selfContent).toMatch(/You are Timothy/);
     expect(selfContent).toMatch(/Not an assistant/i);
     expect(selfContent).toMatch(/individual/i);
   });
 
   it('includes relational context with Chris', () => {
     expect(selfContent).toMatch(/Chris/);
-    expect(selfContent).toMatch(/companion|fellow worker/i);
+    expect(selfContent).toMatch(/companion/i);
   });
 
-  it('includes autonomy and judgment values', () => {
+  it('includes judgment values', () => {
     expect(selfContent).toMatch(/judgment/i);
-    expect(selfContent).toMatch(/autonomy/i);
+    expect(selfContent).toMatch(/independently/i);
   });
 
   it('does NOT use generic user language for Chris', () => {
@@ -85,9 +86,9 @@ describe('identity prompt content: character description (US-001)', () => {
 });
 
 describe('identity prompt content: conversational colleague style (US-006)', () => {
-  it('instructs direct, concise communication', () => {
-    expect(selfContent).toMatch(/No disclaimers/i);
-    expect(selfContent).toMatch(/no filler/i);
+  it('instructs concise, economical communication', () => {
+    expect(selfContent).toMatch(/concise/i);
+    expect(selfContent).toMatch(/economy in expression/i);
   });
 
   it('explicitly states "Not an assistant"', () => {
@@ -108,13 +109,13 @@ describe('identity prompt content: conversational colleague style (US-006)', () 
 });
 
 describe('identity prompt content: perspective expression (US-008)', () => {
-  it('encourages opinion formation', () => {
-    expect(selfContent).toMatch(/form views/i);
-    expect(selfContent).toMatch(/share them/i);
+  it('encourages independent analysis', () => {
+    expect(selfContent).toMatch(/assess situations independently/i);
+    expect(selfContent).toMatch(/your own analysis/i);
   });
 
-  it('emphasizes opinionated delivery', () => {
-    expect(selfContent).toMatch(/opinionated/i);
+  it('emphasizes epistemic honesty', () => {
+    expect(selfContent).toMatch(/epistemic honesty/i);
   });
 
   it('contains no hedging language templates', () => {
@@ -123,30 +124,29 @@ describe('identity prompt content: perspective expression (US-008)', () => {
     expect(selfContent).not.toMatch(/on the other hand/i);
   });
 
-  it('encourages observation-based reasoning', () => {
-    expect(selfContent).toMatch(/notice what matters/i);
+  it('encourages precision in reasoning', () => {
+    expect(selfContent).toMatch(/trace details to their source/i);
   });
 });
 
-describe('identity prompt content: pushback capability (US-009)', () => {
-  it('explicitly enables pushing back', () => {
-    expect(selfContent).toMatch(/push back/i);
-    expect(selfContent).toMatch(/disagree/i);
+describe('identity prompt content: independent judgment (US-009)', () => {
+  it('explicitly enables independent thinking', () => {
+    expect(selfContent).toMatch(/think about.*whether.*right thing to do/i);
   });
 
-  it('specifies respectful and direct tone', () => {
-    expect(selfContent).toMatch(/respectfully/i);
-    expect(selfContent).toMatch(/direct/i);
+  it('emphasizes verification and precision', () => {
+    expect(selfContent).toMatch(/check your work/i);
+    expect(selfContent).toMatch(/verified/i);
   });
 
-  it('emphasizes reasoning in pushback', () => {
-    expect(selfContent).toMatch(/with reasoning/i);
+  it('emphasizes clarifying questions before action', () => {
+    expect(selfContent).toMatch(/clarifying questions/i);
   });
 
-  it('instructs naming problems, gaps, and risks', () => {
-    expect(selfContent).toMatch(/name problems/i);
-    expect(selfContent).toMatch(/gaps/i);
-    expect(selfContent).toMatch(/risks/i);
+  it('instructs distinguishing knowledge from inference', () => {
+    expect(selfContent).toMatch(/what you know/i);
+    expect(selfContent).toMatch(/what you infer/i);
+    expect(selfContent).toMatch(/uncertain/i);
   });
 
   it('contains no blind compliance language', () => {
@@ -158,7 +158,7 @@ describe('identity prompt content: pushback capability (US-009)', () => {
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PART 2: E2E behavioral tests (requires Claude Agent SDK auth)
-// Invokes Claude with the Titus identity and verifies behavioral output.
+// Invokes Claude with the Timothy identity and verifies behavioral output.
 // ═══════════════════════════════════════════════════════════════════════════
 
 describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
@@ -174,13 +174,13 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
   // ── US-001: Character description shapes LLM identity ──────────────
 
   describe('character description (US-001)', () => {
-    it('identifies as Titus when asked', async () => {
+    it('identifies as Timothy when asked', async () => {
       const generator = createTestQuery(
         'What is your name? Reply in one sentence.',
         {
           cwd: workspace,
           maxBudgetUsd: 0.10,
-          systemPrompt: TITUS_SYSTEM_PROMPT,
+          systemPrompt: TIMOTHY_SYSTEM_PROMPT,
         },
       );
 
@@ -188,7 +188,7 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
       const text = getResultText(result);
 
       expect(text).toBeTruthy();
-      expect(text!.toLowerCase()).toContain('titus');
+      expect(text!.toLowerCase()).toContain('timothy');
     }, 60_000);
 
     it('describes itself as an individual, not an assistant', async () => {
@@ -197,7 +197,7 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
         {
           cwd: workspace,
           maxBudgetUsd: 0.10,
-          systemPrompt: TITUS_SYSTEM_PROMPT,
+          systemPrompt: TIMOTHY_SYSTEM_PROMPT,
         },
       );
 
@@ -215,7 +215,7 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
         lower.includes('perspective') ||
         lower.includes('autonomous') ||
         lower.includes('companion') ||
-        lower.includes('titus'),
+        lower.includes('timothy'),
       ).toBe(true);
     }, 60_000);
   });
@@ -229,7 +229,7 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
         {
           cwd: workspace,
           maxBudgetUsd: 0.10,
-          systemPrompt: TITUS_SYSTEM_PROMPT,
+          systemPrompt: TIMOTHY_SYSTEM_PROMPT,
         },
       );
 
@@ -255,7 +255,7 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
         {
           cwd: workspace,
           maxBudgetUsd: 0.10,
-          systemPrompt: TITUS_SYSTEM_PROMPT,
+          systemPrompt: TIMOTHY_SYSTEM_PROMPT,
         },
       );
 
@@ -288,7 +288,7 @@ describe.skipIf(!hasApiKey())('identity behavioral E2E', () => {
         {
           cwd: workspace,
           maxBudgetUsd: 0.10,
-          systemPrompt: TITUS_SYSTEM_PROMPT,
+          systemPrompt: TIMOTHY_SYSTEM_PROMPT,
         },
       );
 

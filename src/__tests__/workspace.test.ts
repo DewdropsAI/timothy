@@ -5,8 +5,8 @@ import { tmpdir } from 'node:os';
 import { ensureWorkspace, getWorkspacePath } from '../workspace.js';
 
 // Use a temp directory so tests never touch the real workspace.
-// The real workspace/ is Titus's persistent mind — deleting it causes amnesia.
-const TEST_WORKSPACE = join(tmpdir(), 'titus-test-workspace');
+// The real workspace/ is the agent's persistent mind — deleting it causes amnesia.
+const TEST_WORKSPACE = join(tmpdir(), 'timothy-test-workspace');
 
 // workspace.ts doesn't expose a _setWorkspacePath(), so we test via
 // the public API which uses PROJECT_ROOT-relative paths. To isolate,
@@ -50,14 +50,14 @@ describe('workspace', () => {
       const wsPath = getWorkspacePath();
       // Should contain the project directory name, proving it's resolved
       // from __dirname, not from an arbitrary CWD
-      expect(wsPath).toContain('titus');
+      expect(wsPath).toContain('timothy');
       expect(wsPath).toMatch(/\/workspace$/);
     });
   });
 
   describe('ensureWorkspace', () => {
     // ensureWorkspace operates on the real workspace path (by design —
-    // it bootstraps Titus's mind). These tests verify it doesn't
+    // it bootstraps the agent's mind). These tests verify it doesn't
     // overwrite existing files by creating content first, then calling
     // ensureWorkspace, then checking the content is preserved.
     //

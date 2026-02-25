@@ -22,7 +22,7 @@ import {
 } from '../proactive.js';
 import { saveThreads, type Thread, type ThreadsState } from '../threads.js';
 
-const tmpDir = join(tmpdir(), 'titus-test-proactive');
+const tmpDir = join(tmpdir(), 'timothy-test-proactive');
 
 beforeEach(() => {
   _setMemoryDir(tmpDir);
@@ -288,7 +288,7 @@ describe('buildScoringPrompt', () => {
       topic: 'deployment pipeline configuration',
       status: 'active',
       lastActivity: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
-      participants: ['user', 'titus'],
+      participants: ['user', 'timothy'],
       messageCount: 4,
     };
 
@@ -309,7 +309,7 @@ describe('evaluateThreadForFollowUp', () => {
     topic: 'deployment pipeline',
     status: 'active',
     lastActivity: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-    participants: ['user', 'titus'],
+    participants: ['user', 'timothy'],
     messageCount: 4,
     ...overrides,
   });
@@ -406,7 +406,7 @@ describe('evaluateThreadForFollowUp', () => {
   });
 
   it('reports shadow mode in result', async () => {
-    process.env.TITUS_PROACTIVE_SHADOW = 'true';
+    process.env.TIMOTHY_PROACTIVE_SHADOW = 'true';
     _setReflectionInvoker(async () =>
       JSON.stringify({
         importance: 9,
@@ -421,7 +421,7 @@ describe('evaluateThreadForFollowUp', () => {
     const result = await evaluateThreadForFollowUp(makeThread());
     expect(result.shadow).toBe(true);
 
-    delete process.env.TITUS_PROACTIVE_SHADOW;
+    delete process.env.TIMOTHY_PROACTIVE_SHADOW;
   });
 });
 
@@ -482,7 +482,7 @@ describe('evaluateActiveThreads', () => {
           topic: 'recent topic for testing purposes',
           status: 'active',
           lastActivity: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
       ],
@@ -513,7 +513,7 @@ describe('evaluateActiveThreads', () => {
           topic: 'stale topic for testing evaluation',
           status: 'active',
           lastActivity: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 4,
         },
       ],
@@ -546,7 +546,7 @@ describe('evaluateActiveThreads', () => {
           topic: 'first stale topic for batch eval test',
           status: 'active',
           lastActivity: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
         {
@@ -554,7 +554,7 @@ describe('evaluateActiveThreads', () => {
           topic: 'second stale topic for batch eval test',
           status: 'active',
           lastActivity: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(),
-          participants: ['user', 'titus'],
+          participants: ['user', 'timothy'],
           messageCount: 2,
         },
       ],
@@ -573,19 +573,19 @@ describe('evaluateActiveThreads', () => {
 
 describe('isShadowMode', () => {
   it('returns false by default', () => {
-    delete process.env.TITUS_PROACTIVE_SHADOW;
+    delete process.env.TIMOTHY_PROACTIVE_SHADOW;
     expect(isShadowMode()).toBe(false);
   });
 
   it('returns true when env var is set', () => {
-    process.env.TITUS_PROACTIVE_SHADOW = 'true';
+    process.env.TIMOTHY_PROACTIVE_SHADOW = 'true';
     expect(isShadowMode()).toBe(true);
-    delete process.env.TITUS_PROACTIVE_SHADOW;
+    delete process.env.TIMOTHY_PROACTIVE_SHADOW;
   });
 
   it('returns false for other values', () => {
-    process.env.TITUS_PROACTIVE_SHADOW = 'false';
+    process.env.TIMOTHY_PROACTIVE_SHADOW = 'false';
     expect(isShadowMode()).toBe(false);
-    delete process.env.TITUS_PROACTIVE_SHADOW;
+    delete process.env.TIMOTHY_PROACTIVE_SHADOW;
   });
 });

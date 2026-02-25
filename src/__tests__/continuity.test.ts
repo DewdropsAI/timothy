@@ -23,7 +23,7 @@ describe('continuity: extractWritebacks', () => {
 
     const response = [
       'Here is my reply.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/foo.md',
       'action: create',
       'Some fact content.',
@@ -42,7 +42,7 @@ describe('continuity: extractWritebacks', () => {
     const { extractWritebacks } = await import('../continuity.js');
 
     const response = [
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/chris-direct.md',
       'action: create',
       '---',
@@ -76,7 +76,7 @@ describe('continuity: extractWritebacks', () => {
 
     const response = [
       'Hello!',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: a.md',
       'action: create',
       'Content A.',
@@ -86,7 +86,7 @@ describe('continuity: extractWritebacks', () => {
 
     const { cleanResponse } = extractWritebacks(response);
 
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
     expect(cleanResponse).toContain('Hello!');
     expect(cleanResponse).toContain('Goodbye!');
   });
@@ -161,7 +161,7 @@ describe('continuity: applyWritebacks', () => {
   let testDir: string;
 
   beforeEach(() => {
-    testDir = join(tmpdir(), 'titus-test-continuity-wb-' + Date.now());
+    testDir = join(tmpdir(), 'timothy-test-continuity-wb-' + Date.now());
     mkdirSync(testDir, { recursive: true });
   });
 
@@ -223,7 +223,7 @@ describe('continuity: ContinuityManager', () => {
   let testDir: string;
 
   beforeEach(() => {
-    testDir = join(tmpdir(), 'titus-test-continuity-mgr-' + Date.now());
+    testDir = join(tmpdir(), 'timothy-test-continuity-mgr-' + Date.now());
     mkdirSync(testDir, { recursive: true });
   });
 
@@ -245,7 +245,7 @@ describe('continuity: ContinuityManager', () => {
 
     const response = [
       'I noted that.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/test.md',
       'action: create',
       'A test fact.',
@@ -257,7 +257,7 @@ describe('continuity: ContinuityManager', () => {
 
     expect(result.cleanResponse).toContain('I noted that.');
     expect(result.cleanResponse).toContain('Anything else?');
-    expect(result.cleanResponse).not.toContain('<!--titus-write');
+    expect(result.cleanResponse).not.toContain('<!--timothy-write');
     expect(result.writebackResults.succeeded).toContain('memory/facts/test.md');
 
     const content = readFileSync(join(testDir, 'memory', 'facts', 'test.md'), 'utf-8');

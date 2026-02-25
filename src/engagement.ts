@@ -196,7 +196,7 @@ export function listTrackedBehaviors(): string[] {
 
 /**
  * Generates a human-readable explanation of engagement-based adaptation.
- * Used when Titus tells Chris he's adjusting behavior.
+ * Used when the agent tells Chris it's adjusting behavior.
  * Returns null if no adaptation is in effect for the given behavior.
  */
 export function explainAdaptation(behaviorType: string): string | null {
@@ -229,7 +229,7 @@ export function explainAdaptation(behaviorType: string): string | null {
 
 /**
  * Resets engagement data for a specific behavior type.
- * Used when Chris explicitly asks Titus to resume a suppressed behavior.
+ * Used when Chris explicitly asks the agent to resume a suppressed behavior.
  */
 export function resetBehavior(behaviorType: string): void {
   const state = loadState();

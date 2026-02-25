@@ -10,7 +10,7 @@ import { extractWritebacks } from './continuity.js';
 /**
  * A pluggable cognitive mode adapter.
  * Implementations handle invocation details (spawning CLI, calling API, etc.)
- * while conforming to Titus's input/output contract.
+ * while conforming to the agent's input/output contract.
  */
 export interface CognitiveAdapter {
   readonly name: string;

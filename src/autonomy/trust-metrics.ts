@@ -42,7 +42,7 @@ const DEFAULT_TRUST_SCORE = 0.5;
 
 /**
  * Manages trust scoring and persistence. Trust evolves over time based on
- * Chris's responses to Titus's actions, controlling which action tiers are allowed.
+ * Chris's responses to the agent's actions, controlling which action tiers are allowed.
  */
 export class TrustManager {
   private workspacePath: string;

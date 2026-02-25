@@ -118,7 +118,7 @@ export async function extractFacts(
 /**
  * Extracts facts from a single exchange (user message + assistant response).
  * Uses heuristic pattern matching as a safety net — the primary memory mechanism
- * is Titus's own writeback directives. Categories: 'fact', 'preference', 'decision', 'context'.
+ * is the agent's own writeback directives. Categories: 'fact', 'preference', 'decision', 'context'.
  * Returns empty array for trivial exchanges (greetings, very short messages).
  */
 export function extractMemories(

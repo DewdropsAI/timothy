@@ -1,7 +1,7 @@
 /** Permission level that determines how an action is handled. */
 export type ActionTier = 'autonomous' | 'propose' | 'restricted';
 
-/** Category of action that Titus can perform, used to determine its tier. */
+/** Category of action that the agent can perform, used to determine its tier. */
 export type ActionCategory =
   | 'workspace-read'
   | 'workspace-write'
@@ -16,7 +16,7 @@ export type ActionCategory =
   | 'external-api-side-effect'
   | 'financial-action';
 
-/** A request for Titus to perform an action, including classification and justification. */
+/** A request for the agent to perform an action, including classification and justification. */
 export interface ActionRequest {
   category: ActionCategory;
   description: string;
@@ -50,7 +50,7 @@ export interface ProposalEntry {
   action: ActionRequest;
   proposedAt: Date;
   status: 'pending' | 'approved' | 'rejected';
-  titusReasoning: string;
+  agentReasoning: string;
   chrisResponse?: string;
 }
 
@@ -63,7 +63,7 @@ export interface CognitiveLoopState {
   attentionState: AttentionState | null;
 }
 
-/** Snapshot of what Titus is paying attention to, used to compute urgency. */
+/** Snapshot of what the agent is paying attention to, used to compute urgency. */
 export interface AttentionState {
   concerns: string[];
   urgencyLevel: number;  // 0.0 to 1.0

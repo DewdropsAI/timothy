@@ -237,7 +237,7 @@ export function computeUrgencyScore(
 // ── CognitiveLoop class ─────────────────────────────────────────────
 
 /**
- * Periodic evaluation loop that decides when Titus should self-invoke a reflection.
+ * Periodic evaluation loop that decides when the agent should self-invoke a reflection.
  * Reads workspace state, computes urgency, and triggers the callback when the threshold is met.
  */
 export class CognitiveLoop {

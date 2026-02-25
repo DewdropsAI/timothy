@@ -3,15 +3,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export interface IdentityConfig {
-  /** Lowercase agent name used in paths, directives, env var prefixes (e.g. "titus") */
+  /** Lowercase agent name used in paths, directives, env var prefixes (e.g. "timothy") */
   agentName: string;
-  /** Display name used in UI and logs (e.g. "Titus") */
+  /** Display name used in UI and logs (e.g. "Timothy") */
   agentNameDisplay: string;
-  /** Config directory name under $HOME (e.g. ".titus") */
+  /** Config directory name under $HOME (e.g. ".timothy") */
   configDir: string;
-  /** Prefix for console log messages (e.g. "titus") */
+  /** Prefix for console log messages (e.g. "timothy") */
   logPrefix: string;
-  /** Prefix for systemd service names (e.g. "titus") */
+  /** Prefix for systemd service names (e.g. "timothy") */
   servicePrefix: string;
 }
 

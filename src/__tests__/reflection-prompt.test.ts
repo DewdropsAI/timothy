@@ -12,8 +12,8 @@ import {
   type GatherResult,
 } from '../reflection.js';
 
-const tmpWm = join(tmpdir(), 'titus-test-reflection-prompt-wm');
-const tmpMem = join(tmpdir(), 'titus-test-reflection-prompt-mem');
+const tmpWm = join(tmpdir(), 'timothy-test-reflection-prompt-wm');
+const tmpMem = join(tmpdir(), 'timothy-test-reflection-prompt-mem');
 
 function makeGatherResult(overrides: Partial<GatherResult> = {}): GatherResult {
   return {
@@ -110,11 +110,11 @@ describe('REFLECTION_SYSTEM_PROMPT self-revision content', () => {
   });
 
   it('retains writeback directive format', () => {
-    expect(REFLECTION_SYSTEM_PROMPT).toContain('<!--titus-write');
+    expect(REFLECTION_SYSTEM_PROMPT).toContain('<!--timothy-write');
   });
 
   it('retains proactive message format', () => {
-    expect(REFLECTION_SYSTEM_PROMPT).toContain('<!--titus-proactive');
+    expect(REFLECTION_SYSTEM_PROMPT).toContain('<!--timothy-proactive');
   });
 });
 

@@ -16,7 +16,7 @@ describe('writeback end-to-end integration', () => {
   let testDir: string;
 
   beforeEach(() => {
-    testDir = join(tmpdir(), 'titus-test-wb-e2e-' + Date.now());
+    testDir = join(tmpdir(), 'timothy-test-wb-e2e-' + Date.now());
     mkdirSync(testDir, { recursive: true });
   });
 
@@ -27,7 +27,7 @@ describe('writeback end-to-end integration', () => {
   it('extract → apply → verify: single create directive with frontmatter', async () => {
     const rawResponse = [
       'I will remember that for you.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/likes-coffee.md',
       'action: create',
       '---',
@@ -51,7 +51,7 @@ describe('writeback end-to-end integration', () => {
     expect(directives[0].content).toBe('Chris enjoys morning coffee.');
 
     // Step 2: Clean response is free of directives
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
     expect(cleanResponse).not.toContain('-->');
     expect(cleanResponse).toContain('I will remember that for you.');
     expect(cleanResponse).toContain('Is there anything else?');
@@ -76,13 +76,13 @@ describe('writeback end-to-end integration', () => {
 
     const rawResponse = [
       'Noted. I have updated my memory.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/facts/uses-vim.md',
       'action: create',
       'Chris uses Vim as his primary editor.',
       '-->',
       'I also updated the journal.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: journal.md',
       'action: append',
       '2026-02-17: Chris mentioned he uses Vim.',
@@ -100,7 +100,7 @@ describe('writeback end-to-end integration', () => {
     expect(cleanResponse).toContain('Noted. I have updated my memory.');
     expect(cleanResponse).toContain('I also updated the journal.');
     expect(cleanResponse).toContain('All done!');
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
 
     await applyWritebacks(directives, testDir);
 
@@ -123,7 +123,7 @@ describe('writeback end-to-end integration', () => {
 
     const rawResponse = [
       'Updated your profile.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/profile.md',
       'action: update',
       'New profile content with latest info.',
@@ -141,17 +141,17 @@ describe('writeback end-to-end integration', () => {
   it('mixed valid and invalid directives: valid ones applied, invalid skipped', async () => {
     const rawResponse = [
       'Processing.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: ../../../etc/evil.md',
       'action: create',
       'Should not be written.',
       '-->',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/valid.md',
       'action: create',
       'This is valid.',
       '-->',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: memory/malformed.md',
       'action: delete',
       'Invalid action.',
@@ -173,7 +173,7 @@ describe('writeback end-to-end integration', () => {
     expect(existsSync(join(testDir, '..', '..', '..', 'etc', 'evil.md'))).toBe(false);
 
     // Clean response should not have any directives
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
     expect(cleanResponse).toContain('Processing.');
   });
 
@@ -198,7 +198,7 @@ describe('writeback failure resilience', () => {
   let testDir: string;
 
   beforeEach(() => {
-    testDir = join(tmpdir(), 'titus-test-wb-resilience-' + Date.now());
+    testDir = join(tmpdir(), 'timothy-test-wb-resilience-' + Date.now());
     mkdirSync(testDir, { recursive: true });
   });
 
@@ -242,7 +242,7 @@ describe('writeback failure resilience', () => {
 
     const rawResponse = [
       'I remembered something.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: blocker-file/fail.md',
       'action: create',
       'This write will fail.',
@@ -255,7 +255,7 @@ describe('writeback failure resilience', () => {
     // Verify clean response is available regardless of apply outcome
     expect(cleanResponse).toContain('I remembered something.');
     expect(cleanResponse).toContain('But you still get this response.');
-    expect(cleanResponse).not.toContain('<!--titus-write');
+    expect(cleanResponse).not.toContain('<!--timothy-write');
 
     // Create a regular file where the directive expects a directory (ENOTDIR)
     writeFileSync(join(testDir, 'blocker-file'), 'I am a file, not a directory');
@@ -282,7 +282,7 @@ describe('writeback failure resilience', () => {
 
     const rawResponse = [
       'Hello! I noted your preference.',
-      '<!--titus-write',
+      '<!--timothy-write',
       'file: blocker/pref.md',
       'action: create',
       'User prefers dark mode.',
@@ -324,7 +324,7 @@ describe('writeback failure resilience', () => {
     const result = await responsePromise;
     expect(result).toContain('Hello! I noted your preference.');
     expect(result).toContain('[Note: I tried to save something to memory but the write failed for: blocker/pref.md');
-    expect(result).not.toContain('<!--titus-write');
+    expect(result).not.toContain('<!--timothy-write');
 
     warnSpy.mockRestore();
     errorSpy.mockRestore();

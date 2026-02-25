@@ -19,8 +19,8 @@ import {
   type GatherResult,
 } from '../reflection.js';
 
-const tmpWm = join(tmpdir(), 'titus-test-reflection-wm');
-const tmpMem = join(tmpdir(), 'titus-test-reflection-mem');
+const tmpWm = join(tmpdir(), 'timothy-test-reflection-wm');
+const tmpMem = join(tmpdir(), 'timothy-test-reflection-mem');
 
 /** Builds a GatherResult with autonomy defaults for backward-compatible tests */
 function makeGatherResult(overrides: Partial<GatherResult> = {}): GatherResult {
@@ -236,7 +236,7 @@ describe('reflect', () => {
 
   it('extracts proactive message from response', async () => {
     _setReflectionInvoker(async () =>
-      'I noticed something.\n\n<!--titus-proactive\nHey Chris, just a heads up about the deployment.\n-->',
+      'I noticed something.\n\n<!--timothy-proactive\nHey Chris, just a heads up about the deployment.\n-->',
     );
 
     const gatherResult = makeGatherResult({ hasAttentionItems: true });
